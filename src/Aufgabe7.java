@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 
-public class Aufgabe7 extends JFrame{
+public class Aufgabe7 extends JFrame {
     JComboBox<String> land;
     JComboBox<String> ausstattung;
     JTextField anreisedatum;
@@ -21,7 +21,7 @@ public class Aufgabe7 extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         String[] laender = {"Deutschland", "Frankreich", "Italien", "Spanien", "Schweiz", "Österreich"};
-        String[] ausstattungen = { "-","Balkon", "Sauna", "TV", "WLAN", "Küche"};
+        String[] ausstattungen = {"-", "Balkon", "Sauna", "TV", "WLAN", "Küche"};
 
 
         JLabel landLabel = new JLabel("Land:");
@@ -31,8 +31,8 @@ public class Aufgabe7 extends JFrame{
 
         JLabel anreiseLabel = new JLabel("Anreise Datum:");
         JLabel abreiseLabel = new JLabel("Abreise Datum:");
-        anreisedatum = new JTextField(LocalDate.now().plusDays(1).toString(),10);
-        abreisedatum = new JTextField(LocalDate.now().plusDays(4).toString(),10);
+        anreisedatum = new JTextField(LocalDate.now().plusDays(1).toString(), 10);
+        abreisedatum = new JTextField(LocalDate.now().plusDays(4).toString(), 10);
 
         JButton suchButton = new JButton("Suchen");
         suchButton.addActionListener(e -> {
@@ -44,7 +44,7 @@ public class Aufgabe7 extends JFrame{
                         "JOIN dbsys43.Besitzt be ON f.Ferienwohnungsname = be.Ferienwohnungsname " +
                         "LEFT JOIN dbsys43.Buchung b ON f.Ferienwohnungsname = b.Ferienwohnungsname " +
                         "WHERE l.LandName = ? "
-                        );
+                );
 
                 if (ausstattung.getSelectedItem() != "-") {
                     sql.append("AND   be.Ausstattungsname = ? ");
@@ -131,18 +131,18 @@ public class Aufgabe7 extends JFrame{
                                     ") VALUES (?,?,?,?,?,?,?,?,?,?,?, ?)";
 
                     try (PreparedStatement psIns = conn.prepareStatement(sqlInsert)) {
-                        psIns.setInt   (1, maxBuchungsnummer + 1);
+                        psIns.setInt(1, maxBuchungsnummer + 1);
                         psIns.setString(2, s);
                         psIns.setString(3, "max.mustermann@mail.de");
-                        psIns.setDate  (4, Date.valueOf(LocalDate.now()));
-                        psIns.setDate  (5, Date.valueOf(abreiseString));
-                        psIns.setDate  (6, Date.valueOf(anreiseString));
-                        psIns.setNull  (7, Types.DATE);
+                        psIns.setDate(4, Date.valueOf(LocalDate.now()));
+                        psIns.setDate(5, Date.valueOf(abreiseString));
+                        psIns.setDate(6, Date.valueOf(anreiseString));
+                        psIns.setNull(7, Types.DATE);
                         psIns.setNull(8, Types.FLOAT);
-                        psIns.setNull  (9, Types.DATE);// Beispielwert
-                        psIns.setInt   (10, maxBuchungsnummer + 1001);
+                        psIns.setNull(9, Types.DATE);// Beispielwert
+                        psIns.setInt(10, maxBuchungsnummer + 1001);
                         psIns.setBigDecimal(11, new BigDecimal("800.00"));
-                        psIns.setDate  (12, Date.valueOf(LocalDate.now()));
+                        psIns.setDate(12, Date.valueOf(LocalDate.now()));
 
                         int rows = psIns.executeUpdate();
                         System.out.println(rows + " Buchung(en) eingefügt");
@@ -161,13 +161,15 @@ public class Aufgabe7 extends JFrame{
             @Override
             public void windowClosed(WindowEvent e) {
                 try {
-                    conn.close(); stmt.close();
-                } catch (SQLException ex) { }
+                    conn.close();
+                    stmt.close();
+                } catch (SQLException ex) {
+                }
             }
         });
 
         JPanel jpanel = new JPanel();
-        jpanel.setLayout(new GridLayout(5,2));
+        jpanel.setLayout(new GridLayout(5, 2));
         jpanel.add(landLabel);
         jpanel.add(land);
         jpanel.add(ausstattungLabel);
@@ -184,6 +186,7 @@ public class Aufgabe7 extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
     public static void main(String[] args) {
         JFrame myAppl = new Aufgabe7();
 
